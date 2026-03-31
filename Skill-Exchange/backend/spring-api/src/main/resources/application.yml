@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/skill_exchange?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:skill_user}
+    password: ${SPRING_DATASOURCE_PASSWORD:skill_pass}
+  jpa:
+    database-platform: ${SPRING_JPA_DATABASE_PLATFORM:org.hibernate.dialect.MariaDBDialect}
+    hibernate:
+      ddl-auto: none
+    open-in-view: false
+    properties:
+      hibernate:
+        boot:
+          allow_jdbc_metadata_access: false
+        format_sql: true
+    show-sql: false
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+  sql:
+    init:
+      mode: never
+
+server:
+  port: ${SERVER_PORT:8081}
+
+app:
+  jwt-secret: ${APP_JWT_SECRET:super-secret-access-key-change-me}
+  refresh-secret: ${APP_REFRESH_SECRET:super-secret-refresh-key-change-me}
+  access-token-minutes: 60
+  refresh-token-days: 7
+  jitsi-base-url: ${APP_JITSI_BASE_URL:https://meet.jit.si}
+  cors-allowed-origins: ${APP_CORS_ALLOWED_ORIGINS:http://localhost:8080}

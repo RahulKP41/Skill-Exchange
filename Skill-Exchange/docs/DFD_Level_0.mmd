@@ -1,0 +1,9 @@
+flowchart LR
+    User([User]) -->|Register, Login, Skills, Requests| Frontend[Frontend Pages]
+    Admin([Admin]) -->|Moderation and Analytics| Frontend
+    Frontend -->|REST API| Spring[Spring Boot API]
+    Frontend -->|Socket and Chat History| Node[Node Gateway]
+    Spring -->|Read and Write| MySQL[(MySQL)]
+    Node -->|Chat Persistence and Room Access| MySQL
+    Spring -->|Session Links| Jitsi[(Jitsi Meet)]
+

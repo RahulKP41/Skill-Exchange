@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Matches | Skill Exchange</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-auth="required">
+  <nav class="navbar navbar-expand-lg navbar-skillx fixed-top">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/pages/dashboard.html"><span class="brand-mark">SX</span><span>Skill Exchange</span></a>
+      <div class="collapse navbar-collapse show">
+        <ul class="navbar-nav ms-auto me-3">
+          <li class="nav-item"><a class="nav-link" href="/pages/dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/skills.html">Skills</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/pages/matches.html">Matches</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/requests.html">Requests</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <div data-nav-user></div>
+          <button class="btn btn-soft" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main class="page-shell">
+    <section class="container">
+      <div class="page-title">
+        <div>
+          <span class="section-kicker">Smart matching</span>
+          <h1 class="mt-2">Members who best fit your next exchange</h1>
+        </div>
+        <p>Your ranking blends reciprocity, ratings, and overlapping availability so you can move faster with better context.</p>
+      </div>
+      <div class="row g-4" id="matchList"></div>
+    </section>
+  </main>
+  <script src="../js/api.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/matches.js"></script>
+</body>
+</html>
+

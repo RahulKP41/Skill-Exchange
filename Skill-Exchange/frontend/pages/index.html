@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Skill Exchange | Learn by Teaching</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-auth="guest">
+  <nav class="navbar navbar-expand-lg navbar-skillx fixed-top">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/pages/index.html">
+        <span class="brand-mark">SX</span>
+        <span>Skill Exchange</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#landingNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="landingNav">
+        <ul class="navbar-nav ms-auto me-4">
+          <li class="nav-item"><a class="nav-link" href="#how-it-works">How it works</a></li>
+          <li class="nav-item"><a class="nav-link" href="#members">Members</a></li>
+          <li class="nav-item"><a class="nav-link" href="#points">Points</a></li>
+        </ul>
+        <div data-nav-user></div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <section class="container mb-5">
+      <div class="hero-shell">
+        <div class="row g-0 align-items-stretch">
+          <div class="col-lg-7 hero-gradient position-relative p-4 p-lg-5">
+            <span class="soft-badge mb-4"><i class="bi bi-stars"></i> Teach what you know. Learn what you need next.</span>
+            <h1 class="display-4 fw-bold mb-3">A human-centered skill marketplace powered by trust, reciprocity, and points.</h1>
+            <p class="lead mb-4 text-white-50">Build a teach-and-learn profile, discover strong matches, book a Jitsi session, chat in real time, and grow your reputation with every exchange.</p>
+            <div class="d-flex flex-wrap gap-3">
+              <a class="btn btn-accent" href="/pages/register.html">Start exchanging</a>
+              <a class="btn btn-outline-light rounded-pill px-4" href="/pages/login.html">Log in to your dashboard</a>
+            </div>
+            <div class="hero-decoration"></div>
+          </div>
+          <div class="col-lg-5 p-4 p-lg-5 bg-white">
+            <div class="row g-3">
+              <div class="col-12">
+                <div class="metric-card">
+                  <p class="section-kicker">Today’s momentum</p>
+                  <h3 class="mb-2">From JavaScript to Public Speaking</h3>
+                  <p class="text-secondary mb-0">Members use points to book focused sessions, then repay the community by teaching their own strongest skills.</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="metric-card h-100">
+                  <p class="text-secondary mb-2">Smart matching</p>
+                  <h2 class="mb-1">70+</h2>
+                  <small class="text-secondary">Reciprocal score weighted by skills, availability, and rating.</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="metric-card h-100">
+                  <p class="text-secondary mb-2">Session-ready</p>
+                  <h2 class="mb-1">Jitsi</h2>
+                  <small class="text-secondary">One-click room links for every confirmed exchange.</small>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="panel-card">
+                  <div class="avatar-stack mb-3">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=120&q=80" alt="">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=120&q=80" alt="">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=120&q=80" alt="">
+                  </div>
+                  <p class="mb-0">“Skill Exchange made learning feel collaborative again, not transactional.”</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="container mb-5" id="how-it-works">
+      <div class="page-title">
+        <div>
+          <span class="section-kicker">How it works</span>
+          <h2 class="mt-2">A simple loop built for real people, not endless browsing.</h2>
+        </div>
+        <p>Create your profile, add skills you teach and skills you want to learn, get ranked matches, send an exchange request, and turn it into a live session with feedback and points.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4"><div class="panel-card h-100"><h4>1. Build your profile</h4><p class="text-secondary mb-0">Show your strengths, goals, availability, location, and teaching energy.</p></div></div>
+        <div class="col-md-4"><div class="panel-card h-100"><h4>2. Get matched</h4><p class="text-secondary mb-0">See reciprocal fits based on what you teach, what you want next, and when you can meet.</p></div></div>
+        <div class="col-md-4"><div class="panel-card h-100"><h4>3. Learn, teach, earn</h4><p class="text-secondary mb-0">Book a session, chat live, complete the exchange, and earn points plus trust signals.</p></div></div>
+      </div>
+    </section>
+
+    <section class="container mb-5" id="members">
+      <div class="page-title">
+        <div>
+          <span class="section-kicker">Community</span>
+          <h2 class="mt-2">Meet members who are already trading knowledge.</h2>
+        </div>
+        <p>The platform highlights people with strong teaching profiles, clear goals, and consistent session feedback.</p>
+      </div>
+      <div class="row g-4" id="featuredMembers"></div>
+    </section>
+
+    <section class="container mb-5" id="points">
+      <div class="glass-panel">
+        <div class="row g-4 align-items-center">
+          <div class="col-lg-6">
+            <span class="section-kicker">Points economy</span>
+            <h2 class="mt-2">Points keep the exchange fair and visible.</h2>
+            <p class="text-secondary">Spend points to book time with someone else. Earn points by teaching well. Build a reputation through completed sessions and written feedback.</p>
+          </div>
+          <div class="col-lg-6">
+            <div class="row g-3">
+              <div class="col-sm-6"><div class="metric-card h-100"><h3>350</h3><p class="mb-0 text-secondary">Default session booking cost</p></div></div>
+              <div class="col-sm-6"><div class="metric-card h-100"><h3>5-star</h3><p class="mb-0 text-secondary">Trust loop with post-session feedback</p></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container pb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between gap-2 footer-note">
+      <span>Skill Exchange brings together profiles, chat, sessions, points, and moderation in one end-to-end platform.</span>
+      <span>Built with HTML, Bootstrap, CSS, JavaScript, Spring Boot, Node.js, and MySQL.</span>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/landing.js"></script>
+</body>
+</html>
+

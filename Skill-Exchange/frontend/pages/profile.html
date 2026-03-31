@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile | Skill Exchange</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-auth="required">
+  <nav class="navbar navbar-expand-lg navbar-skillx fixed-top">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/pages/dashboard.html"><span class="brand-mark">SX</span><span>Skill Exchange</span></a>
+      <div class="collapse navbar-collapse show">
+        <ul class="navbar-nav ms-auto me-3">
+          <li class="nav-item"><a class="nav-link" href="/pages/dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/pages/profile.html">Profile</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/skills.html">Skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/matches.html">Matches</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/requests.html">Requests</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <div data-nav-user></div>
+          <button class="btn btn-soft" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main class="page-shell">
+    <section class="container">
+      <div class="page-title">
+        <div>
+          <span class="section-kicker">Profile</span>
+          <h1 class="mt-2">Shape how members experience you</h1>
+        </div>
+        <p>Update your intro, location, photo, and weekly availability to improve match quality.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="glass-panel">
+            <div id="profileHero"></div>
+            <p class="footer-note mt-3 mb-0" id="profileFeedback"></p>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="glass-panel">
+            <form id="profileForm" class="row g-3">
+              <div class="col-md-6"><label class="form-label">Full name</label><input class="form-control" name="fullName"></div>
+              <div class="col-md-6"><label class="form-label">Headline</label><input class="form-control" name="headline"></div>
+              <div class="col-12"><label class="form-label">Bio</label><textarea class="form-control" name="bio" rows="4"></textarea></div>
+              <div class="col-md-6"><label class="form-label">Phone</label><input class="form-control" name="phone"></div>
+              <div class="col-md-6"><label class="form-label">Location</label><input class="form-control" name="location"></div>
+              <div class="col-12"><label class="form-label">Profile photo URL</label><input class="form-control" name="profilePhotoUrl"></div>
+              <div class="col-12">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <label class="form-label mb-0">Availability</label>
+                  <button class="btn btn-soft btn-sm" type="button" id="addAvailabilityRow">Add slot</button>
+                </div>
+                <div id="availabilityList"></div>
+              </div>
+              <div class="col-12"><button class="btn btn-brand" type="submit">Save profile</button></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="../js/api.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/profile.js"></script>
+</body>
+</html>
+

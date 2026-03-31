@@ -1,0 +1,25 @@
+flowchart TD
+    A[User Browser] --> B[Auth and Profile UI]
+    A --> C[Matches and Requests UI]
+    A --> D[Sessions, Wallet, Feedback UI]
+    A --> E[Chat UI]
+
+    B --> F[/api/auth and /api/profile/]
+    C --> G[/api/matches and /api/requests/]
+    D --> H[/api/sessions /api/wallet /api/feedback/]
+    E --> I[/gateway REST and socket.io/]
+
+    F --> J[Spring Security and AuthService]
+    G --> K[MatchService and ExchangeRequestService]
+    H --> L[SessionService WalletService FeedbackService]
+    I --> M[Socket Auth Room Access ChatService]
+
+    J --> N[(users refresh_tokens)]
+    K --> O[(skills user_skills exchange_requests availability_slots)]
+    L --> P[(exchange_sessions point_transactions feedback notifications)]
+    M --> Q[(chat_rooms chat_messages exchange_requests)]
+    L --> R[(Jitsi link generator)]
+    Admin[Admin Console] --> S[/api/admin and /api/analytics/]
+    S --> T[AdminService AnalyticsService]
+    T --> U[(moderation_reports admin_audit_logs)]
+

@@ -1,0 +1,13 @@
+{
+  "name": "skill-exchange-workspace",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Full-stack Skill Exchange platform workspace",
+  "scripts": {
+    "compose:up": "docker compose up --build",
+    "compose:down": "docker compose down -v",
+    "test:node": "npm --prefix backend/node-gateway test",
+    "test:spring": "backend/spring-api/mvnw.cmd test",
+    "test": "npm run test:node"
+  }
+}

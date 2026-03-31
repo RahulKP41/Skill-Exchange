@@ -1,0 +1,178 @@
+CREATE TABLE IF NOT EXISTS users (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  full_name VARCHAR(120) NOT NULL,
+  email VARCHAR(160) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  phone VARCHAR(40),
+  bio TEXT,
+  location VARCHAR(120),
+  headline VARCHAR(160),
+  profile_photo_url VARCHAR(255),
+  role VARCHAR(30) NOT NULL DEFAULT 'USER',
+  points_balance INT NOT NULL DEFAULT 1000,
+  average_rating DECIMAL(3,2) NOT NULL DEFAULT 0.00,
+  total_reviews INT NOT NULL DEFAULT 0,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS refresh_tokens (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  token_hash VARCHAR(255) NOT NULL UNIQUE,
+  expires_at TIMESTAMP NOT NULL,
+  revoked BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_refresh_tokens_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS skills (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  name VARCHAR(120) NOT NULL UNIQUE,
+  category VARCHAR(80) NOT NULL,
+  description TEXT NOT NULL,
+  icon VARCHAR(60),
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS user_skills (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  skill_id BIGINT NOT NULL,
+  skill_type VARCHAR(20) NOT NULL,
+  proficiency_level VARCHAR(20) NOT NULL,
+  years_of_experience INT NOT NULL DEFAULT 0,
+  highlights TEXT,
+  is_featured BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_user_skill (user_id, skill_id, skill_type),
+  CONSTRAINT fk_user_skills_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_user_skills_skill FOREIGN KEY (skill_id) REFERENCES skills(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS availability_slots (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  weekday VARCHAR(20) NOT NULL,
+  start_time VARCHAR(20) NOT NULL,
+  end_time VARCHAR(20) NOT NULL,
+  timezone VARCHAR(50) NOT NULL DEFAULT 'UTC',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_availability_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS exchange_requests (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  sender_id BIGINT NOT NULL,
+  receiver_id BIGINT NOT NULL,
+  offered_user_skill_id BIGINT NOT NULL,
+  requested_user_skill_id BIGINT NOT NULL,
+  status VARCHAR(30) NOT NULL DEFAULT 'PENDING',
+  message TEXT,
+  preferred_date_time TIMESTAMP NULL,
+  points_cost INT NOT NULL DEFAULT 350,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_requests_sender FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_requests_receiver FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_requests_offered_skill FOREIGN KEY (offered_user_skill_id) REFERENCES user_skills(id) ON DELETE CASCADE,
+  CONSTRAINT fk_requests_requested_skill FOREIGN KEY (requested_user_skill_id) REFERENCES user_skills(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS exchange_sessions (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  request_id BIGINT NOT NULL UNIQUE,
+  scheduled_at TIMESTAMP NOT NULL,
+  duration_minutes INT NOT NULL,
+  meeting_link VARCHAR(255) NOT NULL,
+  agenda TEXT,
+  status VARCHAR(30) NOT NULL DEFAULT 'SCHEDULED',
+  completion_notes TEXT,
+  completed_at TIMESTAMP NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_sessions_request FOREIGN KEY (request_id) REFERENCES exchange_requests(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS feedback (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  session_id BIGINT NOT NULL,
+  reviewer_id BIGINT NOT NULL,
+  reviewee_id BIGINT NOT NULL,
+  rating INT NOT NULL,
+  comment TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE KEY uq_session_reviewer (session_id, reviewer_id),
+  CONSTRAINT fk_feedback_session FOREIGN KEY (session_id) REFERENCES exchange_sessions(id) ON DELETE CASCADE,
+  CONSTRAINT fk_feedback_reviewer FOREIGN KEY (reviewer_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_feedback_reviewee FOREIGN KEY (reviewee_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS point_transactions (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  session_id BIGINT NULL,
+  transaction_type VARCHAR(30) NOT NULL,
+  points_delta INT NOT NULL,
+  balance_after INT NOT NULL,
+  description VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_points_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_points_session FOREIGN KEY (session_id) REFERENCES exchange_sessions(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS notifications (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  title VARCHAR(120) NOT NULL,
+  message VARCHAR(255) NOT NULL,
+  type VARCHAR(40) NOT NULL,
+  is_read BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_notifications_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS moderation_reports (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  reporter_id BIGINT NOT NULL,
+  reported_user_id BIGINT NOT NULL,
+  request_id BIGINT NULL,
+  reason VARCHAR(120) NOT NULL,
+  details TEXT,
+  status VARCHAR(30) NOT NULL DEFAULT 'OPEN',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT fk_reports_reporter FOREIGN KEY (reporter_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_reports_reported_user FOREIGN KEY (reported_user_id) REFERENCES users(id) ON DELETE CASCADE,
+  CONSTRAINT fk_reports_request FOREIGN KEY (request_id) REFERENCES exchange_requests(id) ON DELETE SET NULL
+);
+
+CREATE TABLE IF NOT EXISTS admin_audit_logs (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  admin_id BIGINT NOT NULL,
+  action VARCHAR(120) NOT NULL,
+  entity_type VARCHAR(60) NOT NULL,
+  entity_id BIGINT NULL,
+  details TEXT,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_audit_admin FOREIGN KEY (admin_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS chat_rooms (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  request_id BIGINT NOT NULL UNIQUE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_chat_room_request FOREIGN KEY (request_id) REFERENCES exchange_requests(id) ON DELETE CASCADE
+);
+
+CREATE TABLE IF NOT EXISTS chat_messages (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  room_id BIGINT NOT NULL,
+  sender_id BIGINT NOT NULL,
+  content TEXT NOT NULL,
+  is_seen BOOLEAN NOT NULL DEFAULT FALSE,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_chat_messages_room FOREIGN KEY (room_id) REFERENCES chat_rooms(id) ON DELETE CASCADE,
+  CONSTRAINT fk_chat_messages_sender FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE
+);
+

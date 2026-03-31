@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sessions | Skill Exchange</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body data-auth="required">
+  <nav class="navbar navbar-expand-lg navbar-skillx fixed-top">
+    <div class="container py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2 fw-bold" href="/pages/dashboard.html"><span class="brand-mark">SX</span><span>Skill Exchange</span></a>
+      <div class="collapse navbar-collapse show">
+        <ul class="navbar-nav ms-auto me-3">
+          <li class="nav-item"><a class="nav-link" href="/pages/dashboard.html">Dashboard</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/requests.html">Requests</a></li>
+          <li class="nav-item"><a class="nav-link active" href="/pages/sessions.html">Sessions</a></li>
+          <li class="nav-item"><a class="nav-link" href="/pages/wallet.html">Wallet</a></li>
+        </ul>
+        <div class="d-flex align-items-center gap-3">
+          <div data-nav-user></div>
+          <button class="btn btn-soft" data-logout>Log out</button>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <main class="page-shell">
+    <section class="container">
+      <div class="page-title">
+        <div>
+          <span class="section-kicker">Sessions</span>
+          <h1 class="mt-2">Schedule and complete your live learning time</h1>
+        </div>
+        <p>Accepted requests can be turned into Jitsi sessions with clear timing, agenda, and completion tracking.</p>
+      </div>
+      <div class="row g-4">
+        <div class="col-lg-4">
+          <div class="glass-panel">
+            <h3 class="mb-3">Book a session</h3>
+            <form id="scheduleForm" class="row g-3">
+              <div class="col-12"><label class="form-label">Accepted request</label><select class="form-select" name="requestId"></select></div>
+              <div class="col-12"><label class="form-label">Scheduled time</label><input class="form-control" type="datetime-local" name="scheduledAt" required></div>
+              <div class="col-12"><label class="form-label">Duration (minutes)</label><input class="form-control" type="number" name="durationMinutes" value="60" min="30"></div>
+              <div class="col-12"><label class="form-label">Agenda</label><textarea class="form-control" name="agenda" rows="3"></textarea></div>
+              <div class="col-12"><button class="btn btn-brand" type="submit">Create session</button></div>
+            </form>
+          </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="glass-panel">
+            <h3 class="mb-3">Session board</h3>
+            <div id="sessionList"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="../js/api.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/sessions.js"></script>
+</body>
+</html>
+

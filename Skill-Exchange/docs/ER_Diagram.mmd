@@ -1,0 +1,20 @@
+erDiagram
+    USERS ||--o{ USER_SKILLS : owns
+    SKILLS ||--o{ USER_SKILLS : catalogues
+    USERS ||--o{ AVAILABILITY_SLOTS : shares
+    USERS ||--o{ EXCHANGE_REQUESTS : sends
+    USERS ||--o{ EXCHANGE_REQUESTS : receives
+    USER_SKILLS ||--o{ EXCHANGE_REQUESTS : offered
+    USER_SKILLS ||--o{ EXCHANGE_REQUESTS : requested
+    EXCHANGE_REQUESTS ||--|| EXCHANGE_SESSIONS : schedules
+    EXCHANGE_SESSIONS ||--o{ FEEDBACK : produces
+    USERS ||--o{ FEEDBACK : writes
+    USERS ||--o{ POINT_TRANSACTIONS : owns
+    EXCHANGE_SESSIONS ||--o{ POINT_TRANSACTIONS : drives
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS ||--o{ MODERATION_REPORTS : reports
+    USERS ||--o{ MODERATION_REPORTS : is_reported
+    USERS ||--o{ ADMIN_AUDIT_LOGS : performs
+    EXCHANGE_REQUESTS ||--|| CHAT_ROOMS : opens
+    CHAT_ROOMS ||--o{ CHAT_MESSAGES : contains
+
