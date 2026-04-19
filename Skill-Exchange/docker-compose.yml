@@ -24,13 +24,14 @@ services:
       context: ./backend/spring-api
     container_name: skill-exchange-spring-api
     environment:
+      SERVER_PORT: 8080
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/skill_exchange?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
       SPRING_DATASOURCE_USERNAME: skill_user
       SPRING_DATASOURCE_PASSWORD: skill_pass
       APP_JWT_SECRET: super-secret-access-key-change-me
       APP_REFRESH_SECRET: super-secret-refresh-key-change-me
       APP_JITSI_BASE_URL: https://meet.jit.si
-      APP_CORS_ALLOWED_ORIGINS: http://localhost:8080
+      APP_CORS_ALLOWED_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
     depends_on:
       mysql:
         condition: service_healthy
@@ -49,7 +50,7 @@ services:
       DB_USER: skill_user
       DB_PASSWORD: skill_pass
       JWT_SECRET: super-secret-access-key-change-me
-      CORS_ORIGIN: http://localhost:8080
+      CORS_ORIGIN: http://localhost:8080,http://127.0.0.1:8080
     depends_on:
       mysql:
         condition: service_healthy
