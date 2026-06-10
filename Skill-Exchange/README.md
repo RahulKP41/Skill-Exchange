@@ -1,4 +1,4 @@
-d# Skill Exchange
+# Skill Exchange
 
 Skill Exchange is a full-stack, Docker-first skill-sharing platform with:
 
