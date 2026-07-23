@@ -7,6 +7,9 @@ Skill Exchange is a full-stack, Docker-first skill-sharing platform with:
 - A Node.js Socket.IO gateway for realtime chat and message history
 - A MySQL schema with seed data and Mermaid source diagrams
 
+## Description 
+Developed a skill-sharing platform that connects users to exchange knowledge and learn new skills. The platform enables users to create profiles, showcase their skills, find suitable learning partners, send session requests, communicate through real-time chat, manage learning sessions, provide feedback, and includes an admin panel for platform management and analytics.
+
 ## Project Structure
 
 ```text
